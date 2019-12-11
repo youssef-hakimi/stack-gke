@@ -27,8 +27,8 @@ module "gcp-gke" {
   ip_range_services       = var.services_ip_range
 
   create_service_account            = true
-  enable_private_endpoint           = true
-  grant_registry_access             = true
+  enable_private_endpoint           = var.enable_only_private_endpoint
+  grant_registry_access             = var.grant_registry_access
   network_policy                    = var.enable_network_policy
   horizontal_pod_autoscaling        = var.enable_horizontal_pod_autoscaling
   http_load_balancing               = var.enable_http_load_balancing
@@ -46,7 +46,7 @@ module "gcp-gke" {
       },
     ],
     [
-      for allowed_ip in var.control_plane_allowed_ips: {
+      for allowed_ip in var.master_authorized_networks: {
         cidr_block   = allowed_ip["cidr"]
         display_name = allowed_ip["name"]
       }

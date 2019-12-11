@@ -97,6 +97,21 @@ variable "control_plane_allowed_ips" {
   default     = []
 }
 
+variable "enable_only_private_endpoint" {
+  description = "If true, only enable the private endpoint which disable the Public endpoint entirely. If false, private endpoint will be enabled, and the public endpoint will be only accessible by master authorized networks."
+  default     = false
+}
+
+variable "grant_registry_access" {
+  description = "Grants created cluster-specific service account storage.objectViewer role."
+  default     = true
+}
+
+variable "master_authorized_networks" {
+  description = "List of master authorized networks."
+  default     = []
+}
+
 variable "enable_network_policy" {
   description = "Enable GKE Cluster network policies addon."
   default     = true

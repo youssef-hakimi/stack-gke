@@ -4,17 +4,10 @@ locals {
   cluster_name = ""
 }
 
-# By default this stack will create a dedicated VPC for the EKS Cluster
-# as the default pod networking will be using this VPC and
-# as some specific VPC and subnets tagging is required.
-# @See:
-# - https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html
-# - https://docs.aws.amazon.com/eks/latest/userguide/pod-networking.html
-#
-# If you want to manage the VPC used by the EKS Cluster elsewhere, comment
-# the following `vpc` module and change all `module.vpc.` references to
-# the matching required informations from your own setup.
-#
+
+# https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters
+# You cannot use a cluster master, node, Pod, or Service IP range that overlaps with 172.17.0.0/16.
+# The size of the RFC 1918 block for the cluster master must be /28.
 module "vpc" {
   #####################################
   # Do not modify the following lines #
@@ -108,7 +101,16 @@ module "gke" {
 
   #. control_plane_allowed_ips (optional): [] 
   #+ Allow Inbound IP CIDRs to access the Kubernetes API.
-  # control_plane_allowed_ips = [
+
+  #. enable_private_endpoint (optional): false
+  #+ If true, only enable the private endpoint which disable the Public endpoint entirely. If false, private endpoint will be enabled, and the public endpoint will be only accessible by master authorized networks.
+
+  #. grant_registry_access (optional): true
+  #+ Grants created cluster-specific service account storage.objectViewer role.
+
+  #. master_authorized_networks (optional): []
+  #+ List of master authorized networks.
+  # master_authorized_networks = [
   #   {
   #     name: "my-ip",
   #     cidr: "x.x.x.x/32"
