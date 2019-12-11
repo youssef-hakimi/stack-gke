@@ -14,7 +14,7 @@ module "gcp-gke" {
 
   name               = var.cluster_name
   regional           = var.cluster_regional
-  zones              = var.cluster_regional ? null : slice(var.gcp_availability_zones, 0, 1)
+  zones              = var.cluster_regional ? null : slice(local.gcp_available_zones, 0, 1)
   kubernetes_version = var.cluster_version
 
   // This craziness gets a plain network name from the reference link which is the

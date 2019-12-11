@@ -23,7 +23,7 @@ data "google_compute_zones" "available" {
 }
 
 locals {
-  gcp_availability_zones = length(var.gcp_zones) > 0 ? var.gcp_zones : data.google_compute_zones.available.names
+  gcp_available_zones = length(var.gcp_zones) > 0 ? var.gcp_zones : data.google_compute_zones.available.names
 }
 
 variable "project" {
