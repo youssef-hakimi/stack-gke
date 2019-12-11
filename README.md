@@ -55,7 +55,7 @@ Name|Description|Type|Default|Required|
 |`project`|Name of the project.|`-`|`($ project $)`|`True`|
 |`stack_git_branch`|Branch to use on the public stack Git repository|`-`|`master`|`True`|
 |`terraform_storage_bucket_name`|Google Cloud Storage bucket name to store terraform remote state file.|`-`|`($ organization_canonical $)-terraform-remote-state`|`True`|
-|`terraform_version`|terraform version used to execute your code.|`-`|`'0.12.9'`|`True`|
+|`terraform_version`|terraform version used to execute your code.|`-`|`'0.12.17'`|`True`|
 
 
 ## Terraform

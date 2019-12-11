@@ -70,7 +70,7 @@ module "vpc" {
 module "gke" {
   #####################################
   # Do not modify the following lines #
-  source = "./module-eks"
+  source = "./module-gke"
 
   project  = var.project
   env      = var.env

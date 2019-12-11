@@ -47,7 +47,7 @@ module "gcp-gke" {
     for allowed_ip in var.control_plane_allowed_ips : {
       cidr_block   = allowed_ip["cidr"]
       display_name = allowed_ip["name"]
-    }
+    },
   ]
 
   enable_private_nodes     = true

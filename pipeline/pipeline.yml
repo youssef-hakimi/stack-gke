@@ -66,7 +66,7 @@ resources:
 - name: git_stack-terraform
   type: git
   source:
-    uri: https://github.com/cycloid-community-catalog/stack-eks
+    uri: https://github.com/cycloid-community-catalog/stack-gke
     branch: ((stack_git_branch))
     paths:
       - terraform/*
