@@ -159,7 +159,7 @@ module "gke" {
       # oauth_scopes = []
       # metadata     = {}
       # labels       = {}
-      # taints       = {}
+      # taints       = []
       # tags         = []
     },
   ]

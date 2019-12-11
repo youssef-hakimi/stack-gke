@@ -98,11 +98,11 @@ module "gcp-gke" {
 
   node_pools_taints = merge(
     {
-      all = {}
+      all = []
     },
     zipmap(
       [for node_pool in var.node_pools : node_pool["name"]],
-      [for node_pool in var.node_pools : lookup(node_pool, "taints", {})]
+      [for node_pool in var.node_pools : lookup(node_pool, "taints", [])]
     ),
   )
 
