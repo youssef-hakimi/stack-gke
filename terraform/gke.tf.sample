@@ -172,8 +172,4 @@ module "gke" {
   subnet_name       = module.vpc.subnet_name
   pods_ip_range     = module.vpc.pods_ip_range
   services_ip_range = module.vpc.services_ip_range
-
-  depends_on = [
-    module.vpc
-  ]
 }
