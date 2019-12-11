@@ -38,17 +38,20 @@ module "gcp-gke" {
   monitoring_service = "monitoring.googleapis.com/kubernetes"
 
   master_ipv4_cidr_block     = var.master_cidr
-  master_authorized_networks = [
-    {
-      cidr_block   = data.google_compute_subnetwork.subnetwork.ip_cidr_range
-      display_name = "VPC"
-    },
-    # control_plane_allowed_ips
-    for allowed_ip in var.control_plane_allowed_ips : {
-      cidr_block   = allowed_ip["cidr"]
-      display_name = allowed_ip["name"]
-    },
-  ]
+  master_authorized_networks = concat(
+    [
+      {
+        cidr_block   = data.google_compute_subnetwork.subnetwork.ip_cidr_range
+        display_name = "VPC"
+      },
+    ],
+    [
+      for allowed_ip in var.control_plane_allowed_ips: {
+        cidr_block   = allowed_ip["cidr"]
+        display_name = allowed_ip["name"]
+      }
+    ]
+  )
 
   enable_private_nodes     = true
   remove_default_node_pool = true
