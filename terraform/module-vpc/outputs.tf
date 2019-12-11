@@ -25,10 +25,10 @@ output "subnet_region" {
 
 output "pods_ip_range" {
   description = "GKE Cluster dedicated pods IP range."
-  value       = module.gcp-network.subnet_secondary_ranges[0].*.range_name[0]
+  value       = module.gcp-network.subnets_secondary_ranges[0].*.range_name[0]
 }
 
 output "services_ip_range" {
   description = "GKE Cluster dedicated services IP range."
-  value       = module.gcp-network.subnet_secondary_ranges[0].*.range_name[1]
+  value       = module.gcp-network.subnets_secondary_ranges[0].*.range_name[1]
 }
