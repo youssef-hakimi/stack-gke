@@ -117,7 +117,7 @@ module "gcp-gke" {
   )
 
   cluster_resource_labels = merge(local.merged_labels, {
-    Name = "${var.project}-${var.env}-gke-cluster"
+    name = "${var.project}-${var.env}-gke-cluster"
   })
 }
 
