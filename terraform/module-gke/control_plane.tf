@@ -70,7 +70,7 @@ module "gcp-gke" {
     },
     zipmap(
       [for node_pool in var.node_pools : node_pool["name"]],
-      [for node_pool in var.node_pools : node_pool["oauth_scopes"]]
+      [for node_pool in var.node_pools : lookup(node_pool, "oauth_scopes", [])]
     ),
   )
 
@@ -80,7 +80,7 @@ module "gcp-gke" {
     },
     zipmap(
       [for node_pool in var.node_pools : node_pool["name"]],
-      [for node_pool in var.node_pools : node_pool["labels"]]
+      [for node_pool in var.node_pools : lookup(node_pool, "labels", {})]
     ),
   )
 
@@ -92,7 +92,7 @@ module "gcp-gke" {
     },
     zipmap(
       [for node_pool in var.node_pools : node_pool["name"]],
-      [for node_pool in var.node_pools : node_pool["metadata"]]
+      [for node_pool in var.node_pools : lookup(node_pool, "metadata", {})]
     ),
   )
 
@@ -102,7 +102,7 @@ module "gcp-gke" {
     },
     zipmap(
       [for node_pool in var.node_pools : node_pool["name"]],
-      [for node_pool in var.node_pools : node_pool["taints"]]
+      [for node_pool in var.node_pools : lookup(node_pool, "taints", {})]
     ),
   )
 
@@ -112,7 +112,7 @@ module "gcp-gke" {
     },
     zipmap(
       [for node_pool in var.node_pools : node_pool["name"]],
-      [for node_pool in var.node_pools : node_pool["tags"]]
+      [for node_pool in var.node_pools : lookup(node_pool, "tags", [])]
     ),
   )
 
