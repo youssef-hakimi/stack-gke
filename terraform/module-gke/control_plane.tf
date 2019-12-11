@@ -6,7 +6,7 @@ data "google_compute_subnetwork" "subnetwork" {
 }
 
 module "gcp-gke" {
-  source       = "terraform-google-modules/kubernetes-engine/google"
+  source       = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster-update-variant"
   version      = "~> 6.1"
   
   project_id = var.gcp_project
