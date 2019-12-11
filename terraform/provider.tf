@@ -1,10 +1,10 @@
 # GCP
 provider "google" {
-  version = "~> 3.0.0-beta.1"
+  version = "~> 2.18.0"
 }
 
 provider "google-beta" {
-  version = "~> 3.0.0-beta.1"
+  version = "~> 2.18.0"
 }
 
 # Kubernetes
