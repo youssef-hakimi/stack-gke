@@ -33,6 +33,7 @@ module "gcp-gke" {
   horizontal_pod_autoscaling        = var.enable_horizontal_pod_autoscaling
   http_load_balancing               = var.enable_http_load_balancing
   disable_legacy_metadata_endpoints = var.disable_legacy_metadata_endpoints
+  enable_binary_authorization       = var.enable_binary_authorization
 
   logging_service    = "logging.googleapis.com/kubernetes"
   monitoring_service = "monitoring.googleapis.com/kubernetes"

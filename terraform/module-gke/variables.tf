@@ -132,6 +132,11 @@ variable "disable_legacy_metadata_endpoints" {
   default     = true
 }
 
+variable "enable_binary_authorization" {
+  description = "Enable GKE Cluster BinAuthZ Admission controller."
+  default     = false
+}
+
 #
 # Node pools
 #
