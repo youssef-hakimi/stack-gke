@@ -92,11 +92,6 @@ variable "cluster_regional" {
   default     = false
 }
 
-variable "control_plane_allowed_ips" {
-  description = "Allow Inbound IP CIDRs to access the Kubernetes API."
-  default     = []
-}
-
 variable "enable_only_private_endpoint" {
   description = "If true, only enable the private endpoint which disable the Public endpoint entirely. If false, private endpoint will be enabled, and the public endpoint will be only accessible by master authorized networks."
   default     = false

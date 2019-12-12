@@ -99,9 +99,6 @@ module "gke" {
   #. cluster_regional (optional): false
   #+ If the GKE Cluster must be regional or zonal. Be careful, this setting is destructive.
 
-  #. control_plane_allowed_ips (optional): [] 
-  #+ Allow Inbound IP CIDRs to access the Kubernetes API.
-
   #. enable_private_endpoint (optional): false
   #+ If true, only enable the private endpoint which disable the Public endpoint entirely. If false, private endpoint will be enabled, and the public endpoint will be only accessible by master authorized networks.
 
