@@ -119,6 +119,10 @@ module "gcp-gke" {
   cluster_resource_labels = merge(local.merged_labels, {
     name = "${var.project}-${var.env}-gke-cluster"
   })
+
+  # gcloud and jq commands not available in the concourse terraform-resource.
+  # By doing that, `stub_domains` and `upstream_nameservers` variables can't be use.
+  skip_provisioners = true
 }
 
 data "google_client_config" "default" {
