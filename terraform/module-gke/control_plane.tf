@@ -13,9 +13,11 @@ module "gcp-gke" {
   region     = var.gcp_region
 
   name               = var.cluster_name
+  description        = "${var.cluster_name} GKE Cluster deployed via the cycloid.io GKE stack. Customer: ${var.customer}, Project: ${var.project}, Env: ${var.env}."
   regional           = var.cluster_regional
   zones              = local.gcp_available_zones
   kubernetes_version = var.cluster_version
+  release_channel    = var.cluster_release_channel
 
   // This craziness gets a plain network name from the reference link which is the
   // only way to force cluster creation to wait on network creation without a
@@ -26,17 +28,34 @@ module "gcp-gke" {
   ip_range_pods           = var.pods_ip_range
   ip_range_services       = var.services_ip_range
 
+  # security
   create_service_account            = true
   enable_private_endpoint           = var.enable_only_private_endpoint
   grant_registry_access             = var.grant_registry_access
-  network_policy                    = var.enable_network_policy
-  horizontal_pod_autoscaling        = var.enable_horizontal_pod_autoscaling
-  http_load_balancing               = var.enable_http_load_balancing
   disable_legacy_metadata_endpoints = var.disable_legacy_metadata_endpoints
-  enable_binary_authorization       = var.enable_binary_authorization
+  enable_intranode_visibility       = var.enable_intranode_visibility
+  enable_shielded_nodes             = var.enable_shielded_nodes
+  node_metadata                     = "SECURE"
+  sandbox_enabled                   = var.enable_sandbox
 
-  logging_service    = "logging.googleapis.com/kubernetes"
-  monitoring_service = "monitoring.googleapis.com/kubernetes"
+  # { state = "ENCRYPTED", key_name = "" }
+  # database_encryption
+
+  # addons
+  network_policy                    = var.enable_network_policy
+  network_policy_provider           = var.network_policy_provider
+  horizontal_pod_autoscaling        = var.enable_horizontal_pod_autoscaling
+  enable_vertical_pod_autoscaling   = var.enable_vertical_pod_autoscaling
+  http_load_balancing               = var.enable_http_load_balancing
+  enable_binary_authorization       = var.enable_binary_authorization
+  cloudrun                          = var.enable_cloudrun
+  istio                             = var.enable_istio
+
+  # settings
+  default_max_pods_per_node         = var.default_max_pods_per_node
+  maintenance_start_time            = var.maintenance_start_time
+  logging_service                   = "logging.googleapis.com/kubernetes"
+  monitoring_service                = "monitoring.googleapis.com/kubernetes"
 
   master_ipv4_cidr_block     = var.master_cidr
   master_authorized_networks = concat(

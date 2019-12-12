@@ -87,6 +87,11 @@ variable "cluster_version" {
   default     = "latest"
 }
 
+variable "cluster_release_channel" {
+  description = "GKE Cluster release channel to use. Accepted values are UNSPECIFIED, RAPID, REGULAR and STABLE."
+  default     = "UNSPECIFIED"
+}
+
 variable "cluster_regional" {
   description = "If the GKE Cluster must be regional or zonal. Be careful, this setting is destructive."
   default     = false
@@ -112,9 +117,19 @@ variable "enable_network_policy" {
   default     = true
 }
 
+variable "network_policy_provider" {
+  description = "The GKE Cluster network policies addon provider."
+  default     = "CALICO"
+}
+
 variable "enable_horizontal_pod_autoscaling" {
   description = "Enable GKE Cluster horizontal pod autoscaling addon."
   default     = true
+}
+
+variable "enable_vertical_pod_autoscaling" {
+  description = "Enable GKE Cluster vertical pod autoscaling addon. Vertical Pod Autoscaling automatically adjusts the resources of pods controlled by it."
+  default     = false
 }
 
 variable "enable_http_load_balancing" {
@@ -132,6 +147,21 @@ variable "enable_binary_authorization" {
   default     = false
 }
 
+variable "enable_cloudrun" {
+  description = "Enable GKE Cluster Cloud Run for Anthos addon."
+  default     = false
+}
+
+variable "enable_istio" {
+  description = "Enable GKE Cluster Istio addon."
+  default     = false
+}
+
+variable "maintenance_start_time" {
+  description = "Time window specified for daily maintenance operations in RFC3339 format."
+  default     = "05:00"
+}
+
 #
 # Node pools
 #
@@ -139,4 +169,24 @@ variable "enable_binary_authorization" {
 variable "node_pools" {
   description = "GKE Cluster node pools to create."
   default     = []
+}
+
+variable "enable_shielded_nodes" {
+  description = "Enable GKE Cluster Shielded Nodes features on all nodes."
+  default     = true
+}
+
+variable "enable_sandbox" {
+  description = "Enable GKE Sandbox (Do not forget to set image_type = COS_CONTAINERD and node_version = 1.12.7-gke.17 or later to use it)."
+  default     = false
+}
+
+variable "default_max_pods_per_node" {
+  description = "The maximum number of pods to schedule per node."
+  default     = "110"
+}
+
+variable "enable_intranode_visibility" {
+  description = "Whether Intra-node visibility is enabled for this cluster. This makes same node pod to pod traffic visible for VPC network."
+  default     = false
 }

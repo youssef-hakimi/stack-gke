@@ -4,10 +4,10 @@ locals {
   cluster_name = ""
 }
 
-
 # https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters
 # You cannot use a cluster master, node, Pod, or Service IP range that overlaps with 172.17.0.0/16.
 # The size of the RFC 1918 block for the cluster master must be /28.
+
 module "vpc" {
   #####################################
   # Do not modify the following lines #
@@ -96,14 +96,14 @@ module "gke" {
   #. cluster_version (optional): latest
   #+ GKE Cluster version to use.
 
+  #. cluster_release_channel (optional): UNSPECIFIED
+  #+ GKE Cluster release channel to use. Accepted values are UNSPECIFIED, RAPID, REGULAR and STABLE.
+
   #. cluster_regional (optional): false
   #+ If the GKE Cluster must be regional or zonal. Be careful, this setting is destructive.
 
-  #. enable_private_endpoint (optional): false
+  #. enable_only_private_endpoint (optional): false
   #+ If true, only enable the private endpoint which disable the Public endpoint entirely. If false, private endpoint will be enabled, and the public endpoint will be only accessible by master authorized networks.
-
-  #. grant_registry_access (optional): true
-  #+ Grants created cluster-specific service account storage.objectViewer role.
 
   #. master_authorized_networks (optional): []
   #+ List of master authorized networks.
@@ -120,8 +120,20 @@ module "gke" {
   #. enable_horizontal_pod_autoscaling (optional): true
   #+ Enable GKE Cluster horizontal pod autoscaling addon.
 
+  #. enable_vertical_pod_autoscaling (optional): false
+  #+ Enable GKE Cluster vertical pod autoscaling addon. Vertical Pod Autoscaling automatically adjusts the resources of pods controlled by it.
+
   #. enable_http_load_balancing (optional): false
   #+ Enable GKE Cluster HTTP load balancing addon.
+
+  #. enable_binary_authorization (optional): false
+  #+ Enable GKE Cluster BinAuthZ Admission controller.
+
+  #. enable_cloudrun (optional): false
+  #+ Enable GKE Cluster Cloud Run for Anthos addon.
+
+  #. enable_istio (optional): false
+  #+ Enable GKE Cluster Istio addon.
 
   ###
   # Node pools
@@ -162,6 +174,15 @@ module "gke" {
       # tags         = []
     },
   ]
+
+  #. enable_shielded_nodes (optional): true
+  #+ Enable GKE Cluster Shielded Nodes features on all nodes.
+
+  #. enable_sandbox (optional): false
+  #+ Enable GKE Sandbox (Do not forget to set image_type = COS_CONTAINERD and node_version = 1.12.7-gke.17 or later to use it).
+
+  #. default_max_pods_per_node (optional): 110
+  #+ The maximum number of pods to schedule per node.
 
   ###
   # Required (should probably not be touched)

@@ -66,14 +66,24 @@ output "cluster_master_version" {
   value       = module.gke.cluster_master_version
 }
 
-output "control_plane_endpoint" {
-  description = "GKE Cluster endpoint."
-  value       = module.gke.control_plane_endpoint
+output "cluster_release_channel" {
+  description = "GKE Cluster release channel."
+  value       = module.gke.cluster_release_channel
 }
 
-output "control_plane_ca" {
+output "cluster_master_authorized_networks_config" {
+  description = "GKE Cluster networks from which access to master is permitted."
+  value       = module.gke.cluster_master_authorized_networks_config
+}
+
+output "cluster_endpoint" {
+  description = "GKE Cluster endpoint."
+  value       = module.gke.cluster_endpoint
+}
+
+output "cluster_ca" {
   description = "GKE Cluster certificate authority."
-  value       = module.gke.control_plane_ca
+  value       = module.gke.cluster_ca
 }
 
 output "node_pools_names" {
