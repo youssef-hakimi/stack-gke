@@ -30,7 +30,7 @@ output "cluster_master_version" {
 
 output "control_plane_endpoint" {
   description = "GKE Cluster endpoint."
-  value       = module.gcp-gke.endpoint
+  value       = "https://${module.gcp-gke.endpoint}"
 }
 
 output "control_plane_ca" {
@@ -60,7 +60,7 @@ locals {
 apiVersion: v1
 clusters:
 - cluster:
-    server: ${module.gcp-gke.endpoint}
+    server: https://${module.gcp-gke.endpoint}
     certificate-authority-data: ${module.gcp-gke.ca_certificate}
   name: gke-${var.cluster_name}
 contexts:
@@ -73,14 +73,14 @@ kind: Config
 preferences: {}
 users:
 - name: gcp-${var.cluster_name}
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1alpha1
-      command: aws-iam-authenticator
-      args:
-        - "token"
-        - "-i"
-        - "${var.cluster_name}"
+  user:    
+    auth-provider:    
+      config:    
+        cmd-args: config config-helper --format=json    
+        cmd-path: gcloud    
+        expiry-key: '{.credential.token_expiry}'    
+        token-key: '{.credential.access_token}'    
+      name: gcp
 KUBECONFIG
 }
 
