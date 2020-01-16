@@ -28,14 +28,24 @@ output "cluster_master_version" {
   value       = module.gcp-gke.master_version
 }
 
-output "control_plane_endpoint" {
-  description = "GKE Cluster endpoint."
-  value       = module.gcp-gke.endpoint
+output "cluster_release_channel" {
+  description = "GKE Cluster release channel."
+  value       = module.gcp-gke.release_channel
 }
 
-output "control_plane_ca" {
+output "cluster_endpoint" {
+  description = "GKE Cluster endpoint."
+  value       = "https://${module.gcp-gke.endpoint}"
+}
+
+output "cluster_ca" {
   description = "GKE Cluster certificate authority."
   value       = module.gcp-gke.ca_certificate
+}
+
+output "cluster_master_authorized_networks_config" {
+  description = "GKE Cluster networks from which access to master is permitted."
+  value       = module.gcp-gke.master_authorized_networks_config
 }
 
 output "node_pools_names" {
@@ -60,7 +70,7 @@ locals {
 apiVersion: v1
 clusters:
 - cluster:
-    server: ${module.gcp-gke.endpoint}
+    server: https://${module.gcp-gke.endpoint}
     certificate-authority-data: ${module.gcp-gke.ca_certificate}
   name: gke-${var.cluster_name}
 contexts:
@@ -73,14 +83,14 @@ kind: Config
 preferences: {}
 users:
 - name: gcp-${var.cluster_name}
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1alpha1
-      command: aws-iam-authenticator
-      args:
-        - "token"
-        - "-i"
-        - "${var.cluster_name}"
+  user:    
+    auth-provider:    
+      config:    
+        cmd-args: config config-helper --format=json    
+        cmd-path: gcloud    
+        expiry-key: '{.credential.token_expiry}'    
+        token-key: '{.credential.access_token}'    
+      name: gcp
 KUBECONFIG
 }
 

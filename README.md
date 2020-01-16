@@ -55,7 +55,7 @@ Name|Description|Type|Default|Required|
 |`project`|Name of the project.|`-`|`($ project $)`|`True`|
 |`stack_git_branch`|Branch to use on the public stack Git repository|`-`|`master`|`True`|
 |`terraform_storage_bucket_name`|Google Cloud Storage bucket name to store terraform remote state file.|`-`|`($ organization_canonical $)-terraform-remote-state`|`True`|
-|`terraform_version`|terraform version used to execute your code.|`-`|`'0.12.9'`|`True`|
+|`terraform_version`|terraform version used to execute your code.|`-`|`'0.12.17'`|`True`|
 
 
 ## Terraform
@@ -65,15 +65,24 @@ Name|Description|Type|Default|Required|
 |Name|Description|Type|Default|Required|
 |---|---|:---:|:---:|:---:|
 |`cluster_regional`|If the GKE Cluster must be regional or zonal. Be careful, this setting is destructive.|`-`|`false`|`False`|
+|`cluster_release_channel`|GKE Cluster release channel to use. Accepted values are UNSPECIFIED, RAPID, REGULAR and STABLE.|`-`|`UNSPECIFIED`|`False`|
 |`cluster_version`|GKE Cluster version to use.|`-`|`latest`|`False`|
-|`control_plane_allowed_ips`|Allow Inbound IP CIDRs to access the Kubernetes API.|`-`|`[]`|`False`|
+|`default_max_pods_per_node`|The maximum number of pods to schedule per node.|`-`|`110`|`False`|
+|`enable_binary_authorization`|Enable GKE Cluster BinAuthZ Admission controller.|`-`|`false`|`False`|
+|`enable_cloudrun`|Enable GKE Cluster Cloud Run for Anthos addon.|`-`|`false`|`False`|
 |`enable_horizontal_pod_autoscaling`|Enable GKE Cluster horizontal pod autoscaling addon.|`-`|`true`|`False`|
 |`enable_http_load_balancing`|Enable GKE Cluster HTTP load balancing addon.|`-`|`false`|`False`|
+|`enable_istio`|Enable GKE Cluster Istio addon.|`-`|`false`|`False`|
 |`enable_network_policy`|Enable GKE Cluster network policies addon.|`-`|`true`|`False`|
+|`enable_only_private_endpoint`|If true, only enable the private endpoint which disable the Public endpoint entirely. If false, private endpoint will be enabled, and the public endpoint will be only accessible by master authorized networks.|`-`|`false`|`False`|
+|`enable_sandbox`|Enable GKE Sandbox (Do not forget to set image_type = COS_CONTAINERD and node_version = 1.12.7-gke.17 or later to use it).|`-`|`false`|`False`|
+|`enable_shielded_nodes`|Enable GKE Cluster Shielded Nodes features on all nodes.|`-`|`true`|`False`|
+|`enable_vertical_pod_autoscaling`|Enable GKE Cluster vertical pod autoscaling addon. Vertical Pod Autoscaling automatically adjusts the resources of pods controlled by it.|`-`|`false`|`False`|
 |`extra_labels`|Dict of extra labels to add on GCP resources. format { "foo" = "bar" }.|`-`|`{}`|`False`|
 |`gcp_project`|The Google Cloud Platform project to use. |`-`|``|`True`|
 |`gcp_region`|The Google Cloud Platform region to use.|`-`|`eu-central1`|`False`|
 |`gcp_zones`|To use specific Google Cloud Platform zones if not regional, otherwise it will be chosen randomly.|`-`|`[]`|`False`|
+|`master_authorized_networks`|List of master authorized networks.|`-`|`[]`|`False`|
 |`network_routing_mode`|The network routing mode.|`-`|`GLOBAL`|`False`|
 |`node_pools`|GKE Cluster node pools to create.|`-`|`[]`|`False`|
 |`pods_cidr`|The CIDR of the pods secondary range.|`-`|`10.9.0.0/16`|`False`|
@@ -84,14 +93,16 @@ Name|Description|Type|Default|Required|
 
 | Name | Description |
 |------|-------------|
+| `cluster_ca` | GKE Cluster certificate authority. |
+| `cluster_endpoint` | GKE Cluster endpoint. |
 | `cluster_location` | GKE Cluster location (region if regional cluster, zone if zonal cluster). |
+| `cluster_master_authorized_networks_config` | GKE Cluster networks from which access to master is permitted. |
 | `cluster_master_version` | GKE Cluster master version. |
 | `cluster_name` | GKE Cluster name. |
 | `cluster_region` | GKE Cluster region." |
+| `cluster_release_channel` | GKE Cluster release channel. |
 | `cluster_type` | GKE Cluster type. |
 | `cluster_zones` | GKE Cluster zones. |
-| `control_plane_ca` | GKE Cluster certificate authority. |
-| `control_plane_endpoint` | GKE Cluster endpoint. |
 | `kubeconfig` | Kubernetes config to connect to the GKE cluster. |
 | `network_name` | GKE Cluster dedicated network name. |
 | `network_self_link` | GKE Cluster dedicated network URI. |

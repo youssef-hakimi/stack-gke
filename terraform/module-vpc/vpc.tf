@@ -20,7 +20,7 @@ module "gcp-network" {
   ]
 
   secondary_ranges = {
-    "${var.project}-gke-${var.env}-subnet" = [
+    "${var.project}-gke-${var.env}-${var.gcp_region}" = [
       {
         range_name    = "${var.project}-gke-${var.env}-${var.gcp_region}-pods"
         ip_cidr_range = var.pods_cidr
@@ -32,36 +32,28 @@ module "gcp-network" {
     ]
   }
 
-  routes = [
-    {
-      name              = "${var.project}-gke-${var.env}-${var.gcp_region}-egress-inet"
-      description       = "route through IGW to access internet"
-      destination_range = "0.0.0.0/0"
-      tags              = "egress-inet"
-      next_hop_internet = "true"
-    },
-  ]
+  # routes = [
+  #   {
+  #     name              = "${var.project}-gke-${var.env}-${var.gcp_region}-egress-inet"
+  #     description       = "route through IGW to access internet"
+  #     destination_range = "0.0.0.0/0"
+  #     tags              = "egress-inet"
+  #     next_hop_internet = "true"
+  #   },
+  # ]
 }
 
-## NAT
+#
+# Cloud NAT
+#
 
-# resource "google_compute_address" "project-nat-ips" {
-#   count   = "${length(var.cloud_nat_ips)}"
-#   name    = "${element(values(var.cloud_nat_ips), count.index)}"
-#   project = "${var.gcp_project}"
-#   region  = "${var.region}"
-# }
-
-# resource “google_compute_router” “project-router” {
-#   name = “${var.vpc_name}-nat-router”
-#   network = “${google_compute_network.project-network.self_link}”
-# }
-
-# resource “google_compute_router_nat” “project-nat” {
-#   name = “${var.vpc_name}-nat-gw”
-#   router = “${google_compute_router.project-router.name}”
-#   nat_ip_allocate_option = “MANUAL_ONLY”
-#   nat_ips = [“${google_compute_address.project-nat-ips.*.self_link}”]
-#   source_subnetwork_ip_ranges_to_nat = “ALL_SUBNETWORKS_ALL_IP_RANGES”
-#   depends_on = [“google_compute_address.project-nat-ips”]
-# }
+module "cloud-nat" {
+  source  = "terraform-google-modules/cloud-nat/google"
+  version = "~> 1.2"
+  
+  project_id    = var.gcp_project
+  region        = var.gcp_region
+  create_router = "true"
+  router        = "${var.project}-gke-${var.env}-${var.gcp_region}-cloud-nat"
+  network       = module.gcp-network.network_name
+}

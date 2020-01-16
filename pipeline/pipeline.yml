@@ -10,12 +10,7 @@ shared:
         repository: cycloid/cycloid-toolkit
         tag: latest
     run:
-      path: /bin/sh
-      args:
-      - -ec
-      - |
-        /usr/bin/merge-stack-and-config
-        echo '((gcp_credentials_json))' > ${MERGE_OUTPUT_PATH}/credentials.json
+      path: /usr/bin/merge-stack-and-config
     outputs:
     - name: merged-stack
       path: "merged-stack"
@@ -43,13 +38,14 @@ resources:
 
 - name: tfstate
   type: terraform
+  icon: terraform
   source:
     env_name: ((env))
     backend_type: gcs
     backend_config:
       bucket: ((terraform_storage_bucket_name))
       prefix: ((project))/((env))
-      # credentials: ((gcp_credentials_json))
+      credentials: ((gcp_credentials_json))
     vars:
       gcp_project: ((gcp_project))
       gcp_region: ((gcp_region))
@@ -60,13 +56,14 @@ resources:
       GOOGLE_PROJECT: ((gcp_project))
       GOOGLE_REGION: ((gcp_region))
       # GOOGLE_ZONE: ((gcp_zone))
-      GOOGLE_CREDENTIALS: merged-stack/credentials.json
+      GOOGLE_CREDENTIALS: ((gcp_credentials_json))
 
 # The Terraform stack (will be merged with the config)
 - name: git_stack-terraform
   type: git
+  icon: git
   source:
-    uri: https://github.com/cycloid-community-catalog/stack-eks
+    uri: https://github.com/cycloid-community-catalog/stack-gke
     branch: ((stack_git_branch))
     paths:
       - terraform/*
@@ -74,6 +71,7 @@ resources:
 # The Terraform config (will be merged with the stack)
 - name: git_config-terraform
   type: git
+  icon: git
   source:
     uri: ((config_git_repository))
     branch: ((config_git_branch))
