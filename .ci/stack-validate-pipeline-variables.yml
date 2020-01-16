@@ -25,8 +25,8 @@ terraform_version: latest
 #. terraform_env_vars (required): dict
 #+ terraform configuration to validate the stack.
 terraform_env_vars:
-  TF_VAR_access_key: ((aws_aws.access_key))
-  TF_VAR_secret_key: ((aws_aws.secret_key))
+  TF_VAR_gcp_project: cycloid-stack-validation
+  GOOGLE_CREDENTIALS: ((raw_gcp-stack-validate.credentials_json))
   # ACTION_ARGS could be plan or validate
   ACTION_ARGS: plan
 
