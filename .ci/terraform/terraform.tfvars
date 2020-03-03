@@ -1,8 +1,8 @@
-project = "project"
+project = "ci-stack-gke"
 
-env = "env"
+env = "master"
 
-customer = "customer"
+customer = "cycloid-owl"
 
 #somelist = [
 #  "one",
