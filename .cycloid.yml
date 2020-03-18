@@ -1,6 +1,7 @@
 # Configuration of the CI pipeline
 name: 'Google GKE'
 canonical: 'stack-gke'
+status: 'public'
 description: 'Used to deploy an Google Kubernetes Engine cluster with one or more node pools.'
 keywords:
   - 'kubernetes'
