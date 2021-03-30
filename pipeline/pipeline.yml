@@ -63,7 +63,8 @@ resources:
   type: git
   icon: git
   source:
-    uri: https://github.com/cycloid-community-catalog/stack-gke
+    uri: git@github.com:youssef-hakimi/stack-gke.git
+    private_key: ((config_git_private_key))
     branch: ((stack_git_branch))
     paths:
       - terraform/*
