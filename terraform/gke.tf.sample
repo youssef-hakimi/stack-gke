@@ -1,7 +1,7 @@
 # Put here a custom name for the GKE Cluster
 # Otherwise `${var.project}-${var.env}` will be used
 locals {
-  cluster_name = ""
+  cluster_name = "youssefpro"
 }
 
 # https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters
