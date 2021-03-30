@@ -75,7 +75,7 @@ resources:
   icon: git
   source:
     uri: ((config_git_repository))
-    branch: ((config_git_branch))
+    branch: main
     private_key: ((config_git_private_key))
     paths:
       - ((config_terraform_path))/*
