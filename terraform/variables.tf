@@ -24,5 +24,5 @@ variable "gcp_region" {
 
 # EKS
 locals {
-  gke_cluster_name = length(local.cluster_name) > 0 ? local.cluster_name : "${var.project}-${var.env}"
+  gke_cluster_name = "${var.project}-${var.env}"
 }
