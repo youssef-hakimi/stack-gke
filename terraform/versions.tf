@@ -2,7 +2,8 @@
 terraform {
   required_providers {
     kubernetes = {
-      version = "1.17.17-gke.2800"
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
     }
   }
   required_version = ">= 0.12"
