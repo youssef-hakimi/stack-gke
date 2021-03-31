@@ -56,4 +56,5 @@ module "cloud-nat" {
   create_router = "true"
   router        = "${var.project}-gke-${var.env}-${var.gcp_region}-cloud-nat"
   network       = module.gcp-network.network_name
+  enable_endpoint_independent_mapping = "true"
 }
