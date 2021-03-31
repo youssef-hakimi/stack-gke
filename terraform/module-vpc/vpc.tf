@@ -49,7 +49,7 @@ module "gcp-network" {
 
 module "cloud-nat" {
   source  = "terraform-google-modules/cloud-nat/google"
-  version = "~> 1.2"
+  version = "~> 1.5"
   
   project_id    = var.gcp_project
   region        = var.gcp_region
