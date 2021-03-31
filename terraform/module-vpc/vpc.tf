@@ -48,7 +48,7 @@ module "gcp-network" {
 #
 
 module "cloud-nat" {
-  source  = "terraform-google-modules/youssef-hakimi"
+  source  = "youssef-hakimi/terraform-google-modules"
   
   project_id    = var.gcp_project
   region        = var.gcp_region
